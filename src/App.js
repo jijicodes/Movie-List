@@ -11,6 +11,7 @@ function App() {
     "https://us-central1-beacon-fe-worksample-api.cloudfunctions.net/app/movies";
   const [list, setList] = useState();
   const [titleSearch, setTitleSearch] = useState("");
+
   useEffect(() => {
     fetch(movieListAPI)
       .then((response) => response.json())
@@ -33,7 +34,7 @@ function App() {
       <LandingHeader />
       <Box border direction="column" pad="small">
         <SearchByTitle onTitleChange={setTitleSearch} text={titleSearch} />
-        <SearchByYear />
+        <SearchByYear year={year} />
       </Box>
 
       <MovieList

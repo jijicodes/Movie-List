@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Anchor, Box, Text } from "grommet";
+import { Anchor, Box, Text, Image, Paragraph } from "grommet";
 
 export const MovieDetail = ({
   movieScore,
@@ -7,10 +7,11 @@ export const MovieDetail = ({
   movieTitle,
   movieYear,
   movieSynopsis,
+  image,
 }) => {
   const [collapse, setCollapse] = useState(false);
   return (
-    <Box>
+    <Box gap="small">
       <Box onClick={() => setCollapse(!collapse)}>
         <Text>
           {movieScore * 100}%
@@ -19,8 +20,19 @@ export const MovieDetail = ({
         </Text>
       </Box>
       {collapse ? (
-        <Box background="#f3f3f3" pad="small">
-          <Text>{movieSynopsis}</Text>
+        <Box
+          background="#f3f3f3"
+          pad="small"
+          align="center"
+          direction="row"
+          justify="around"
+        >
+          <Box height="medium" width="30vw" align="center">
+            <Image fit="cover" src={image}></Image>
+          </Box>
+          <Box width="40vw">
+            <Paragraph>{movieSynopsis}</Paragraph>
+          </Box>
         </Box>
       ) : (
         <></>

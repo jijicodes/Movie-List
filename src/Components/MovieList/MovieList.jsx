@@ -8,6 +8,7 @@ export const MovieList = ({ list }) => {
       <ul>
         {list.map((movie) => (
           <MovieDetail
+            image={movie["cover-url"]}
             movieScore={movie.score}
             movieUrl={movie.url}
             movieTitle={movie.title}
