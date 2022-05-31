@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Anchor, Box, Grommet, Text } from "grommet";
+import { Anchor, Box, Text } from "grommet";
+import { MovieDetail } from "../MovieDetail/MovieDetail";
 
 export const MovieList = ({ list }) => {
   return (
     <Box>
       <ul>
         {list.map((movie) => (
-          <Text>
-            <li key={movie.id}>
-              {movie.score * 100}%{" "}
-              <Anchor target="_blank" href={movie.url} label={movie.title} />(
-              {movie.year})
-            </li>
-          </Text>
+          <MovieDetail
+            movieScore={movie.score}
+            movieUrl={movie.url}
+            movieTitle={movie.title}
+            movieYear={movie.year}
+            movieSynopsis={movie.synopsis}
+          />
         ))}
       </ul>
     </Box>

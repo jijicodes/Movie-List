@@ -11,8 +11,6 @@ function App() {
     "https://us-central1-beacon-fe-worksample-api.cloudfunctions.net/app/movies";
   const [list, setList] = useState();
   const [titleSearch, setTitleSearch] = useState("");
-  console.log(titleSearch);
-
   useEffect(() => {
     fetch(movieListAPI)
       .then((response) => response.json())
