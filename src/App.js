@@ -6,11 +6,19 @@ import { MovieList } from "./Components/MovieList/MovieList";
 import { SearchByTitle } from "./Components/SearchByTitle/SearchByTitle";
 import { SearchByYear } from "./Components/SearchByYear/SearchByYear";
 
+const uniq = (xs) =>
+  xs.reduce(
+    (uniques, x) => (uniques.includes(x) ? uniques : [...uniques, x]),
+    []
+  );
+
 function App() {
   const movieListAPI =
     "https://us-central1-beacon-fe-worksample-api.cloudfunctions.net/app/movies";
   const [list, setList] = useState();
   const [titleSearch, setTitleSearch] = useState("");
+  const [year, setYear] = useState("All");
+  console.log("year", year, list);
 
   useEffect(() => {
     fetch(movieListAPI)
@@ -23,7 +31,20 @@ function App() {
       .then(setList)
       .catch((err) => err);
   }, []);
-  console.log(list);
+
+  const titleFilteredMovies =
+    titleSearch.length < 1
+      ? list
+      : list.filter((a) =>
+          a.title.toLowerCase().includes(titleSearch.toLowerCase())
+        );
+
+  const yearFilteredMovies =
+    year === "All"
+      ? titleFilteredMovies
+      : titleFilteredMovies.filter(
+          (movie) => movie.year >= year && movie.year < year + 10
+        );
 
   if (list === undefined) {
     return <Spinner size="large" />;
@@ -33,19 +54,21 @@ function App() {
     <Grommet>
       <LandingHeader />
       <Box border direction="column" pad="small">
-        <SearchByTitle onTitleChange={setTitleSearch} text={titleSearch} />
-        <SearchByYear year={year} />
+        <SearchByTitle text={titleSearch} onTitleChange={setTitleSearch} />
+        <SearchByYear
+          year={year}
+          onYearChange={setYear}
+          yearOptions={[
+            "All",
+            ...uniq(
+              titleFilteredMovies
+                .map(({ year }) => Math.floor(Number(year) / 10) * 10)
+                .sort()
+            ),
+          ]}
+        />
       </Box>
-
-      <MovieList
-        list={
-          titleSearch.length < 1
-            ? list
-            : list.filter((a) =>
-                a.title.toLowerCase().includes(titleSearch.toLowerCase())
-              )
-        }
-      />
+      <MovieList movieList={yearFilteredMovies} />
     </Grommet>
   );
 }

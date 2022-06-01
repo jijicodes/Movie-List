@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Box, Text, Select, NameValueList, NameValuePair } from "grommet";
 
-export const SearchByYear = ({ year, onYearChange }) => {
+export const SearchByYear = ({ year, onYearChange, yearOptions }) => {
   return (
     <NameValueList>
       <NameValuePair name="Decades:">
         <Select
-          options={["1960", "1970", "1980", "1990", "2000", "2010"]}
+          options={yearOptions}
           value={year}
-          onChange={onYearChange}
+          onChange={(e) => {
+            onYearChange(
+              e.target.value !== "All" ? Number(e.target.value) : "All"
+            );
+          }}
         />
       </NameValuePair>
     </NameValueList>

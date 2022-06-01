@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Anchor, Box, Text } from "grommet";
+import React from "react";
+import { Box } from "grommet";
 import { MovieDetail } from "../MovieDetail/MovieDetail";
 
-export const MovieList = ({ list }) => {
+export const MovieList = ({ movieList }) => {
   return (
     <Box>
       <ul>
-        {list.map((movie) => (
+        {movieList.map((movie) => (
           <MovieDetail
             image={movie["cover-url"]}
             movieScore={movie.score}
